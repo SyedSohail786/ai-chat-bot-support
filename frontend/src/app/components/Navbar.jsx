@@ -117,6 +117,9 @@ export default function Navbar() {
               </>
             ) : (
               <>
+              <Link href="/" className="hover:text-blue-600 transition-colors">
+                  Home
+                </Link>
                 <Link href="/about" className="hover:text-blue-600 transition-colors">
                   About
                 </Link>
@@ -220,6 +223,15 @@ export default function Navbar() {
             </>
           ) : (
             <>
+            <motion.div variants={mobileItem} className="py-2">
+                <Link 
+                  href="/" 
+                  className="hover:text-blue-600 transition-colors block py-2"
+                  onClick={() => setMobileMenuOpen(false)}
+                >
+                  Home
+                </Link>
+              </motion.div>
               <motion.div variants={mobileItem} className="py-2">
                 <Link 
                   href="/about" 
