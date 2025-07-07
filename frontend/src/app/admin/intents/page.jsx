@@ -45,7 +45,6 @@ export default function IntentsPage() {
     fetchIntents();
   }, []);
 
-  // In your IntentsPage component, update the handleCreateIntent function:
   const handleCreateIntent = async (newIntent) => {
     try {
       const token = localStorage.getItem('adminToken');
@@ -64,8 +63,7 @@ export default function IntentsPage() {
         throw new Error(data.error || 'Failed to create intent');
       }
 
-      // Instead of adding to local state, refresh the entire list
-      fetchIntents(); // This should be your existing function that fetches all intents
+      fetchIntents();
       setIsModalOpen(false);
       toast.success('Intent created successfully!');
     } catch (err) {
@@ -75,7 +73,7 @@ export default function IntentsPage() {
   };
 
   const handleIntentUpdated = () => {
-    fetchIntents(); // Refresh the intent list
+    fetchIntents();
   };
 
   if (isLoading) {
@@ -87,12 +85,12 @@ export default function IntentsPage() {
   }
 
   return (
-    <div className="p-6  bg-gray-50 min-h-screen">
-      <div className="flex justify-between items-center mb-6">
-        <h1 className="text-2xl font-bold">Intents Management</h1>
+    <div className="p-4 md:p-6 bg-gray-50 min-h-screen">
+      <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 gap-4">
+        <h1 className="text-xl md:text-2xl font-bold">Intents Management</h1>
         <button
           onClick={() => setIsModalOpen(true)}
-          className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors"
+          className="px-4 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 transition-colors w-full md:w-auto text-sm md:text-base"
         >
           Create New Intent
         </button>
@@ -101,7 +99,6 @@ export default function IntentsPage() {
       <IntentList
         intents={intents.map(intent => ({
           ...intent,
-          // Ensure we have the full name property
           name: intent.name || `projects/${projectId}/agent/intents/${intent.id}`
         }))}
         onIntentUpdated={fetchIntents}

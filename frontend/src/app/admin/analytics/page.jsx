@@ -33,8 +33,6 @@ export default function AnalyticsPage() {
         }
 
         const data = await response.json();
-        
-        // Generate dynamic fake data for response time and satisfaction
         const fakeAnalytics = generateFakeAnalytics(data, timeRange);
         setAnalytics(fakeAnalytics);
       } catch (err) {
@@ -47,13 +45,10 @@ export default function AnalyticsPage() {
     fetchData();
   }, [router, timeRange]);
 
-  // Function to generate realistic fake data for response time and satisfaction
   const generateFakeAnalytics = (realData, range) => {
-    // Base values that will be modified based on range
     let baseResponseTime, baseSatisfaction;
     let responseTimeVariance, satisfactionVariance;
 
-    // Set different base values and variances based on time range
     switch(range) {
       case 'day':
         baseResponseTime = 1.2;
@@ -75,15 +70,11 @@ export default function AnalyticsPage() {
         satisfactionVariance = 10;
     }
 
-    // Generate random values within range
     const randomResponseTime = baseResponseTime + (Math.random() * responseTimeVariance * 2 - responseTimeVariance);
     const randomSatisfaction = baseSatisfaction + (Math.random() * satisfactionVariance * 2 - satisfactionVariance);
-
-    // Calculate trends (random but plausible)
     const responseTimeChange = Math.round((Math.random() * 20 - 10) * 10) / 10;
     const satisfactionChange = Math.round((Math.random() * 15 - 7.5) * 10) / 10;
 
-    // Generate response times data for the chart
     const responseTimes = [
       { intent: 'Welcome', time: randomResponseTime * 0.8 },
       { intent: 'FAQ', time: randomResponseTime * 1.1 },
@@ -111,18 +102,19 @@ export default function AnalyticsPage() {
   }
 
   return (
-    <div className="p-6 bg-gray-50 min-h-screen">
-      <div className="flex justify-between items-center mb-8">
+    <div className="p-4 sm:p-6 bg-gray-50 min-h-screen">
+      {/* Header Section */}
+      <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-6 gap-4">
         <div>
-          <h1 className="text-3xl font-bold text-gray-800">Conversation Analytics</h1>
-          <p className="text-gray-600">Insights from your Dialogflow interactions</p>
+          <h1 className="text-2xl sm:text-3xl font-bold text-gray-800">Conversation Analytics</h1>
+          <p className="text-sm sm:text-base text-gray-600">Insights from your Dialogflow interactions</p>
         </div>
-        <div className="flex space-x-2 bg-white p-1 rounded-lg shadow-sm">
+        <div className="flex space-x-1 sm:space-x-2 bg-white p-1 rounded-lg shadow-sm w-full sm:w-auto">
           {['day', 'week', 'month'].map((range) => (
             <button
               key={range}
               onClick={() => setTimeRange(range)}
-              className={`px-4 py-2 rounded-md text-sm font-medium capitalize transition-colors ${
+              className={`px-3 py-1 sm:px-4 sm:py-2 rounded-md text-xs sm:text-sm font-medium capitalize transition-colors ${
                 timeRange === range 
                   ? 'bg-blue-600 text-white shadow-md' 
                   : 'text-gray-600 hover:bg-gray-100'
@@ -135,7 +127,7 @@ export default function AnalyticsPage() {
       </div>
       
       {/* Key Metrics Cards */}
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6 mb-6 sm:mb-8">
         <DashboardCard 
           title="Total Messages" 
           value={analytics?.totalMessages?.toLocaleString() || '0'} 
@@ -163,33 +155,33 @@ export default function AnalyticsPage() {
       </div>
 
       {/* Main Charts */}
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
-        <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
-          <div className="flex justify-between items-center mb-4">
-            <h2 className="text-lg font-semibold text-gray-800">Message Volume</h2>
+      <div className="grid grid-cols-1 xl:grid-cols-2 gap-4 sm:gap-6 mb-6 sm:mb-8">
+        <div className="bg-white p-4 sm:p-6 rounded-xl shadow-sm border border-gray-100">
+          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-4 gap-2">
+            <h2 className="text-base sm:text-lg font-semibold text-gray-800">Message Volume</h2>
             <span className="text-xs text-gray-500">Last {timeRange}</span>
           </div>
           <MessageChart 
             data={analytics?.messageData || []} 
-            height={300}
+            height={250}
           />
         </div>
         
-        <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
-          <div className="flex justify-between items-center mb-4">
-            <h2 className="text-lg font-semibold text-gray-800">Response Performance</h2>
+        <div className="bg-white p-4 sm:p-6 rounded-xl shadow-sm border border-gray-100">
+          <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center mb-4 gap-2">
+            <h2 className="text-base sm:text-lg font-semibold text-gray-800">Response Performance</h2>
             <span className="text-xs text-gray-500">By intent</span>
           </div>
           <ResponseTimeChart 
             data={analytics?.responseTimes || []} 
-            height={300}
+            height={250}
           />
         </div>
       </div>
 
       {/* Popular Intents Section */}
-      <div className="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
-        <h2 className="text-lg font-semibold text-gray-800 mb-4">Popular Intents</h2>
+      <div className="bg-white p-4 sm:p-6 rounded-xl shadow-sm border border-gray-100">
+        <h2 className="text-base sm:text-lg font-semibold text-gray-800 mb-4">Popular Intents</h2>
         <PopularIntents 
           intents={analytics?.popularIntents || []} 
         />

@@ -78,53 +78,53 @@ export default function ContactPage() {
   };
 
   return (
-    <div className="flex flex-col" style={{ height: 'calc(100vh - 64px)' }}>
+    <div className="min-h-[calc(100vh-64px)]">
       <motion.div
         initial="hidden"
         animate="visible"
         variants={containerVariants}
-        className="flex flex-col md:flex-row h-full"
+        className="flex flex-col lg:flex-row"
       >
         {/* Contact Info Section */}
         <motion.div
           variants={itemVariants}
-          className="w-full md:w-1/2 bg-gradient-to-br from-blue-50 to-indigo-50 p-8 md:p-12 flex flex-col justify-center"
+          className="w-full lg:w-1/2 bg-gradient-to-br from-blue-50 to-indigo-50 p-6 sm:p-8 md:p-12 flex flex-col justify-center order-2 lg:order-1"
         >
           <motion.h2
             variants={itemVariants}
-            className="text-3xl font-bold text-gray-900 mb-8"
+            className="text-2xl sm:text-3xl font-bold text-gray-900 mb-6 sm:mb-8"
           >
             Get in <span className="bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">Touch</span>
           </motion.h2>
 
-          <motion.div variants={itemVariants} className="space-y-6">
+          <motion.div variants={itemVariants} className="space-y-4 sm:space-y-6">
             <div className="flex items-start">
-              <div className="p-2 bg-blue-100 rounded-full text-blue-600 mr-4">
-                <FiMail className="h-5 w-5" />
+              <div className="p-2 bg-blue-100 rounded-full text-blue-600 mr-3 sm:mr-4">
+                <FiMail className="h-4 w-4 sm:h-5 sm:w-5" />
               </div>
               <div>
-                <h3 className="text-lg font-medium text-gray-900">Email</h3>
-                <p className="text-gray-600">support@smartsupport.ai</p>
+                <h3 className="text-base sm:text-lg font-medium text-gray-900">Email</h3>
+                <p className="text-sm sm:text-base text-gray-600">support@smartsupport.ai</p>
               </div>
             </div>
 
             <div className="flex items-start">
-              <div className="p-2 bg-indigo-100 rounded-full text-indigo-600 mr-4">
-                <FiPhone className="h-5 w-5" />
+              <div className="p-2 bg-indigo-100 rounded-full text-indigo-600 mr-3 sm:mr-4">
+                <FiPhone className="h-4 w-4 sm:h-5 sm:w-5" />
               </div>
               <div>
-                <h3 className="text-lg font-medium text-gray-900">Phone</h3>
-                <p className="text-gray-600">+1 (555) 123-4567</p>
+                <h3 className="text-base sm:text-lg font-medium text-gray-900">Phone</h3>
+                <p className="text-sm sm:text-base text-gray-600">+1 (555) 123-4567</p>
               </div>
             </div>
 
             <div className="flex items-start">
-              <div className="p-2 bg-purple-100 rounded-full text-purple-600 mr-4">
-                <FiMapPin className="h-5 w-5" />
+              <div className="p-2 bg-purple-100 rounded-full text-purple-600 mr-3 sm:mr-4">
+                <FiMapPin className="h-4 w-4 sm:h-5 sm:w-5" />
               </div>
               <div>
-                <h3 className="text-lg font-medium text-gray-900">Office</h3>
-                <p className="text-gray-600">123 Tech Street, San Francisco, CA</p>
+                <h3 className="text-base sm:text-lg font-medium text-gray-900">Office</h3>
+                <p className="text-sm sm:text-base text-gray-600">123 Tech Street, San Francisco, CA</p>
               </div>
             </div>
           </motion.div>
@@ -133,19 +133,19 @@ export default function ContactPage() {
         {/* Contact Form Section */}
         <motion.div
           variants={itemVariants}
-          className="w-full md:w-1/2 bg-white p-8 md:p-12 flex flex-col justify-center"
+          className="w-full lg:w-1/2 bg-white p-6 sm:p-8 md:p-12 flex flex-col justify-center order-1 lg:order-2"
           ref={formRef}
         >
           <motion.h2
             variants={itemVariants}
-            className="text-3xl font-bold text-gray-900 mb-8"
+            className="text-2xl sm:text-3xl font-bold text-gray-900 mb-6 sm:mb-8"
           >
             Send us a <span className="bg-gradient-to-r from-blue-600 to-indigo-600 bg-clip-text text-transparent">Message</span>
           </motion.h2>
 
           <motion.form
             variants={containerVariants}
-            className="space-y-6"
+            className="space-y-4 sm:space-y-6"
             onSubmit={handleSubmit}
           >
             <motion.div variants={itemVariants}>
@@ -156,7 +156,7 @@ export default function ContactPage() {
                 name="name"
                 value={formData.name}
                 onChange={handleChange}
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
+                className="w-full px-3 sm:px-4 py-2 sm:py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
                 placeholder="Your name"
                 required
               />
@@ -170,7 +170,7 @@ export default function ContactPage() {
                 name="email"
                 value={formData.email}
                 onChange={handleChange}
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
+                className="w-full px-3 sm:px-4 py-2 sm:py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
                 placeholder="your@email.com"
                 required
               />
@@ -184,7 +184,7 @@ export default function ContactPage() {
                 value={formData.message}
                 onChange={handleChange}
                 rows="4"
-                className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
+                className="w-full px-3 sm:px-4 py-2 sm:py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-all"
                 placeholder="Your message..."
                 required
               ></textarea>
@@ -193,12 +193,17 @@ export default function ContactPage() {
             <motion.div variants={itemVariants}>
               <motion.button
                 type="submit"
-                className="w-full flex items-center justify-center px-6 py-3 bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-medium rounded-lg hover:shadow-md transition-all disabled:opacity-70"
+                className="w-full flex items-center justify-center px-4 sm:px-6 py-2 sm:py-3 bg-gradient-to-r from-blue-600 to-indigo-600 text-white font-medium rounded-lg hover:shadow-md transition-all disabled:opacity-70"
                 whileHover={{ scale: 1.02 }}
                 whileTap={{ scale: 0.98 }}
                 disabled={isSubmitting}
               >
-                {isSubmitting ? 'Sending...' : 'Send Message'} <FiSend className="ml-2" />
+                {isSubmitting ? 'Sending...' : (
+                  <>
+                    <span className="text-sm sm:text-base">Send Message</span>
+                    <FiSend className="ml-2 h-4 w-4" />
+                  </>
+                )}
               </motion.button>
             </motion.div>
           </motion.form>

@@ -11,8 +11,8 @@ export default function IntentList({ intents = [], onIntentUpdated }) {
   const handleEdit = (intent) => {
     const fullPath=intent.name
     const intentId = fullPath.split('/').pop();
-  router.push(`/admin/edit/${intentId}`);
-};
+    router.push(`/admin/edit/${intentId}`);
+  };
 
   const handleDelete = async (intentName) => {
     if (!confirm('Are you sure you want to delete this intent?')) return;
@@ -57,16 +57,16 @@ export default function IntentList({ intents = [], onIntentUpdated }) {
         <table className="min-w-full divide-y divide-gray-200">
           <thead className="bg-gray-50/50">
             <tr>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                 Intent
               </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider hidden sm:table-cell">
                 Training
               </th>
-              <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+              <th className="px-4 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider hidden sm:table-cell">
                 Responses
               </th>
-              <th className="px-6 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
+              <th className="px-4 py-3 text-right text-xs font-medium text-gray-500 uppercase tracking-wider">
                 Actions
               </th>
             </tr>
@@ -74,9 +74,9 @@ export default function IntentList({ intents = [], onIntentUpdated }) {
           <tbody className="divide-y divide-gray-200">
             {intents.map((intent) => (
               <tr key={intent.name || intent.intentId} className="hover:bg-gray-50/50 transition-colors">
-                <td className="px-6 py-4 whitespace-nowrap">
+                <td className="px-4 py-4 whitespace-nowrap">
                   <div className="flex items-center gap-3">
-                    <div className="p-2 rounded-lg bg-blue-50 text-blue-600">
+                    <div className="p-2 rounded-lg bg-blue-50 text-blue-600 hidden sm:block">
                       <FiMessageCircle size={18} />
                     </div>
                     <div>
@@ -85,17 +85,17 @@ export default function IntentList({ intents = [], onIntentUpdated }) {
                     </div>
                   </div>
                 </td>
-                <td className="px-6 py-4">
+                <td className="px-4 py-4 hidden sm:table-cell">
                   <div className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-green-100 text-green-800">
                     {getTrainingPhrasesCount(intent)} phrases
                   </div>
                 </td>
-                <td className="px-6 py-4">
+                <td className="px-4 py-4 hidden sm:table-cell">
                   <div className="inline-flex items-center px-3 py-1 rounded-full text-xs font-medium bg-purple-100 text-purple-800">
                     {intent.messages?.length || 0} responses
                   </div>
                 </td>
-                <td className="px-6 py-4 whitespace-nowrap text-right">
+                <td className="px-4 py-4 whitespace-nowrap text-right">
                   <div className="flex justify-end gap-2">
                     <button 
                       onClick={() => handleEdit(intent)}

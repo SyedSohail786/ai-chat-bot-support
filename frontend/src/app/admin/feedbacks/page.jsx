@@ -67,7 +67,7 @@ const AdminContacts = () => {
 
   const handleDelete = async (id) => {
     if (!confirm('Are you sure you want to delete this contact?')) return;
-    
+
     try {
       const token = localStorage.getItem('adminToken');
       const response = await fetch(`${baseUrl}/api/contact/${id}`, {
@@ -106,7 +106,7 @@ const AdminContacts = () => {
       >
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 gap-4">
           <h1 className="text-2xl font-bold text-gray-800">Contact Messages</h1>
-          
+
           <div className="relative w-full md:w-64">
             <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
               <FiSearch className="text-gray-400" />
@@ -127,56 +127,27 @@ const AdminContacts = () => {
           </div>
         ) : (
           <>
-            <div className="overflow-x-auto">
+            {/* TABLE VIEW */}
+            <div className="hidden sm:block overflow-x-auto">
               <table className="min-w-full divide-y divide-gray-200">
                 <thead className="bg-gray-50">
                   <tr>
-                    <th
-                      scope="col"
-                      className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer"
-                      onClick={() => handleSort('name')}
-                    >
-                      <div className="flex items-center">
-                        Name
-                        <SortIcon column="name" />
-                      </div>
+                    <th onClick={() => handleSort('name')} className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer">
+                      <div className="flex items-center">Name <SortIcon column="name" /></div>
                     </th>
-                    <th
-                      scope="col"
-                      className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer"
-                      onClick={() => handleSort('email')}
-                    >
-                      <div className="flex items-center">
-                        Email
-                        <SortIcon column="email" />
-                      </div>
+                    <th onClick={() => handleSort('email')} className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer">
+                      <div className="flex items-center">Email <SortIcon column="email" /></div>
                     </th>
-                    <th
-                      scope="col"
-                      className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer"
-                      onClick={() => handleSort('createdAt')}
-                    >
-                      <div className="flex items-center">
-                        Date
-                        <SortIcon column="createdAt" />
-                      </div>
+                    <th onClick={() => handleSort('createdAt')} className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider cursor-pointer">
+                      <div className="flex items-center">Date <SortIcon column="createdAt" /></div>
                     </th>
-                    <th scope="col" className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                      Actions
-                    </th>
+                    <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
                   </tr>
                 </thead>
                 <tbody className="bg-white divide-y divide-gray-200">
                   <AnimatePresence>
                     {contacts.map((contact) => (
-                      <motion.tr
-                        key={contact._id}
-                        initial={{ opacity: 0 }}
-                        animate={{ opacity: 1 }}
-                        exit={{ opacity: 0 }}
-                        transition={{ duration: 0.2 }}
-                        className="hover:bg-gray-50"
-                      >
+                      <motion.tr key={contact._id} initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.2 }} className="hover:bg-gray-50">
                         <td className="px-6 py-4 whitespace-nowrap">
                           <div className="flex items-center">
                             <div className="flex-shrink-0 h-10 w-10 rounded-full bg-blue-100 flex items-center justify-center">
@@ -189,28 +160,20 @@ const AdminContacts = () => {
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap">
                           <div className="text-sm text-gray-900 flex items-center">
-                            <FiMail className="mr-2 text-gray-400" />
-                            {contact.email}
+                            <FiMail className="mr-2 text-gray-400" /> {contact.email}
                           </div>
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap">
                           <div className="text-sm text-gray-500 flex items-center">
-                            <FiClock className="mr-2 text-gray-400" />
-                            {formatDate(contact.createdAt)}
+                            <FiClock className="mr-2 text-gray-400" /> {formatDate(contact.createdAt)}
                           </div>
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
                           <div className="flex space-x-2">
-                            <button
-                              onClick={() => setExpandedContact(expandedContact === contact._id ? null : contact._id)}
-                              className="text-blue-600 hover:text-blue-900"
-                            >
+                            <button onClick={() => setExpandedContact(expandedContact === contact._id ? null : contact._id)} className="text-blue-600 hover:text-blue-900">
                               {expandedContact === contact._id ? 'Hide' : 'View'}
                             </button>
-                            <button
-                              onClick={() => handleDelete(contact._id)}
-                              className="text-red-600 hover:text-red-900"
-                            >
+                            <button onClick={() => handleDelete(contact._id)} className="text-red-600 hover:text-red-900">
                               <FiTrash2 />
                             </button>
                           </div>
@@ -222,63 +185,44 @@ const AdminContacts = () => {
               </table>
             </div>
 
-            {/* Expanded Message View */}
-            <AnimatePresence>
-              {expandedContact && (
-                <motion.div
-                  initial={{ opacity: 0, height: 0 }}
-                  animate={{ opacity: 1, height: 'auto' }}
-                  exit={{ opacity: 0, height: 0 }}
-                  transition={{ duration: 0.3 }}
-                  className="mt-4 bg-gray-50 rounded-lg overflow-hidden"
-                >
-                  {contacts.find(c => c._id === expandedContact) && (
-                    <div className="p-6">
-                      <div className="flex items-start">
-                        <div className="flex-shrink-0 h-10 w-10 rounded-full bg-indigo-100 flex items-center justify-center">
-                          <FiMessageSquare className="text-indigo-600" />
-                        </div>
-                        <div className="ml-4">
-                          <h3 className="text-lg font-medium text-gray-900">Message</h3>
-                          <p className="mt-1 text-sm text-gray-600 whitespace-pre-line">
-                            {contacts.find(c => c._id === expandedContact).message}
-                          </p>
-                        </div>
-                      </div>
+            {/* MOBILE CARD VIEW */}
+            <div className="block sm:hidden space-y-4">
+              {contacts.map((contact) => (
+                <div key={contact._id} className="bg-white shadow rounded-lg p-4">
+                  <div className="flex items-center gap-3 mb-2">
+                    <div className="bg-blue-100 rounded-full p-2 text-blue-600">
+                      <FiUser />
                     </div>
-                  )}
-                </motion.div>
-              )}
-            </AnimatePresence>
-
-            {/* Pagination */}
-            {pagination.pages > 1 && (
-              <div className="flex items-center justify-between mt-6">
-                <div className="text-sm text-gray-700">
-                  Showing <span className="font-medium">{(pagination.page - 1) * pagination.limit + 1}</span> to{' '}
-                  <span className="font-medium">
-                    {Math.min(pagination.page * pagination.limit, pagination.total)}
-                  </span>{' '}
-                  of <span className="font-medium">{pagination.total}</span> messages
+                    <div>
+                      <h3 className="text-sm font-semibold text-gray-900">{contact.name}</h3>
+                      <p className="text-xs text-gray-500 flex items-center">
+                        <FiMail className="mr-1" /> {contact.email}
+                      </p>
+                    </div>
+                  </div>
+                  <p className="text-sm text-gray-700 whitespace-pre-line line-clamp-4">
+                    {contact.message}
+                  </p>
+                  <p className="text-xs text-gray-400 mt-2 flex items-center">
+                    <FiClock className="mr-1" /> {formatDate(contact.createdAt)}
+                  </p>
+                  <div className="mt-3 flex justify-between">
+                    <button
+                      onClick={() => setExpandedContact(expandedContact === contact._id ? null : contact._id)}
+                      className="text-blue-600 text-sm"
+                    >
+                      {expandedContact === contact._id ? 'Hide' : 'View'}
+                    </button>
+                    <button
+                      onClick={() => handleDelete(contact._id)}
+                      className="text-red-600 text-sm flex items-center gap-1"
+                    >
+                      <FiTrash2 /> Delete
+                    </button>
+                  </div>
                 </div>
-                <div className="flex space-x-2">
-                  <button
-                    onClick={() => setPagination({ ...pagination, page: Math.max(1, pagination.page - 1) })}
-                    disabled={pagination.page === 1}
-                    className="px-3 py-1 border border-gray-300 rounded-md text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 disabled:opacity-50"
-                  >
-                    Previous
-                  </button>
-                  <button
-                    onClick={() => setPagination({ ...pagination, page: Math.min(pagination.pages, pagination.page + 1) })}
-                    disabled={pagination.page === pagination.pages}
-                    className="px-3 py-1 border border-gray-300 rounded-md text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 disabled:opacity-50"
-                  >
-                    Next
-                  </button>
-                </div>
-              </div>
-            )}
+              ))}
+            </div>
           </>
         )}
       </motion.div>
