@@ -1,0 +1,22 @@
+step 1: get Google project id and dialogflow agent id
+step 2: copy that 
+step 3: go to backend folder/ .env file and paste the 
+GOOGLE_PROJECT_ID= project id
+DIALOGFLOW_AGENT_ID=agent id
+and SAVE
+
+
+Go to frontend/ .env.local file and paste google project id
+NEXT_PUBLIC_GOOGLE_PROJECT_ID: your key 
+
+To run the frontend
+goto frontend and open CMD in same path,
+run command "npm install" //this will install all the dependencies
+run command "npm run dev"
+
+To run the backend  
+goto backend and open CMD in same path,
+run command "npm install" //this will install all the dependencies
+run command "nodemon i"
+
+DONE
