@@ -1,7 +1,10 @@
 ##  STEPS TO FOLLOW
-step 1: get Google project id and dialogflow agent id
-step 2: copy that 
-step 3: go to backend folder/ create .env file and copy below and paste in .env
+step 1: get Google project id and dialogflow agent id and your project json file download it from google cloud
+
+step 2: copy that google project id, dialogflow agent id and rename your json file with dialogflow-key.json
+
+step 3: go to backend folder/ create .env file and copy below and paste in .env also paste that dialogflow-key.json in backend/
+
 ```
 MONGODB_URI=mongodb://localhost:27017/ai-chat
 GOOGLE_PROJECT_ID= paste your google project id
