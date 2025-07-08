@@ -1,5 +1,5 @@
 'use client';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, Fragment } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { FiSearch, FiChevronDown, FiChevronUp, FiMail, FiUser, FiMessageSquare, FiClock, FiTrash2 } from 'react-icons/fi';
 import { useRouter } from 'next/navigation';
@@ -97,15 +97,15 @@ const AdminContacts = () => {
   };
 
   return (
-    <div className="p-6 bg-gray-50 min-h-screen">
+    <div className="p-4 md:p-6 bg-gray-50 min-h-screen">
       <motion.div
         initial={{ opacity: 0, y: 20 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.3 }}
-        className="bg-white rounded-xl shadow-sm p-6"
+        className="bg-white rounded-xl shadow-sm p-4 md:p-6"
       >
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-6 gap-4">
-          <h1 className="text-2xl font-bold text-gray-800">Contact Messages</h1>
+          <h1 className="text-xl md:text-2xl font-bold text-gray-800">Contact Messages</h1>
 
           <div className="relative w-full md:w-64">
             <div className="absolute inset-y-0 left-0 pl-3 flex items-center pointer-events-none">
@@ -145,9 +145,15 @@ const AdminContacts = () => {
                   </tr>
                 </thead>
                 <tbody className="bg-white divide-y divide-gray-200">
-                  <AnimatePresence>
-                    {contacts.map((contact) => (
-                      <motion.tr key={contact._id} initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} transition={{ duration: 0.2 }} className="hover:bg-gray-50">
+                  {contacts.map((contact) => (
+                    <Fragment key={contact._id}>
+                      <motion.tr 
+                        initial={{ opacity: 0 }} 
+                        animate={{ opacity: 1 }} 
+                        exit={{ opacity: 0 }} 
+                        transition={{ duration: 0.2 }} 
+                        className="hover:bg-gray-50"
+                      >
                         <td className="px-6 py-4 whitespace-nowrap">
                           <div className="flex items-center">
                             <div className="flex-shrink-0 h-10 w-10 rounded-full bg-blue-100 flex items-center justify-center">
@@ -170,7 +176,10 @@ const AdminContacts = () => {
                         </td>
                         <td className="px-6 py-4 whitespace-nowrap text-sm font-medium">
                           <div className="flex space-x-2">
-                            <button onClick={() => setExpandedContact(expandedContact === contact._id ? null : contact._id)} className="text-blue-600 hover:text-blue-900">
+                            <button 
+                              onClick={() => setExpandedContact(expandedContact === contact._id ? null : contact._id)} 
+                              className="text-blue-600 hover:text-blue-900"
+                            >
                               {expandedContact === contact._id ? 'Hide' : 'View'}
                             </button>
                             <button onClick={() => handleDelete(contact._id)} className="text-red-600 hover:text-red-900">
@@ -179,8 +188,28 @@ const AdminContacts = () => {
                           </div>
                         </td>
                       </motion.tr>
-                    ))}
-                  </AnimatePresence>
+                      {expandedContact === contact._id && (
+                        <motion.tr 
+                          key={`${contact._id}-expanded`}
+                          initial={{ opacity: 0, height: 0 }}
+                          animate={{ opacity: 1, height: 'auto' }}
+                          exit={{ opacity: 0, height: 0 }}
+                          transition={{ duration: 0.2 }}
+                        >
+                          <td colSpan="4" className="px-6 py-4 bg-gray-50">
+                            <div className="flex items-start gap-4">
+                              <div className="flex-shrink-0 mt-1">
+                                <FiMessageSquare className="text-gray-400 text-lg" />
+                              </div>
+                              <div className="text-sm text-gray-700 whitespace-pre-line">
+                                {contact.message}
+                              </div>
+                            </div>
+                          </td>
+                        </motion.tr>
+                      )}
+                    </Fragment>
+                  ))}
                 </tbody>
               </table>
             </div>
@@ -188,7 +217,13 @@ const AdminContacts = () => {
             {/* MOBILE CARD VIEW */}
             <div className="block sm:hidden space-y-4">
               {contacts.map((contact) => (
-                <div key={contact._id} className="bg-white shadow rounded-lg p-4">
+                <motion.div 
+                  key={contact._id}
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.2 }}
+                  className="bg-white shadow rounded-lg p-4"
+                >
                   <div className="flex items-center gap-3 mb-2">
                     <div className="bg-blue-100 rounded-full p-2 text-blue-600">
                       <FiUser />
@@ -200,19 +235,37 @@ const AdminContacts = () => {
                       </p>
                     </div>
                   </div>
-                  <p className="text-sm text-gray-700 whitespace-pre-line line-clamp-4">
-                    {contact.message}
-                  </p>
+                  
+                  <AnimatePresence>
+                    {expandedContact === contact._id ? (
+                      <motion.div
+                        key={`${contact._id}-expanded-mobile`}
+                        initial={{ opacity: 0, height: 0 }}
+                        animate={{ opacity: 1, height: 'auto' }}
+                        exit={{ opacity: 0, height: 0 }}
+                        transition={{ duration: 0.2 }}
+                        className="overflow-hidden"
+                      >
+                        <p className="text-sm text-gray-700 whitespace-pre-line">
+                          {contact.message}
+                        </p>
+                      </motion.div>
+                    ) : (
+                      <motion.p 
+                        key={`${contact._id}-collapsed-mobile`}
+                        initial={{ opacity: 1 }}
+                        exit={{ opacity: 0 }}
+                        className="text-sm text-gray-700 whitespace-pre-line line-clamp-4"
+                      >
+                        {contact.message}
+                      </motion.p>
+                    )}
+                  </AnimatePresence>
+                  
                   <p className="text-xs text-gray-400 mt-2 flex items-center">
                     <FiClock className="mr-1" /> {formatDate(contact.createdAt)}
                   </p>
                   <div className="mt-3 flex justify-between">
-                    <button
-                      onClick={() => setExpandedContact(expandedContact === contact._id ? null : contact._id)}
-                      className="text-blue-600 text-sm"
-                    >
-                      {expandedContact === contact._id ? 'Hide' : 'View'}
-                    </button>
                     <button
                       onClick={() => handleDelete(contact._id)}
                       className="text-red-600 text-sm flex items-center gap-1"
@@ -220,7 +273,7 @@ const AdminContacts = () => {
                       <FiTrash2 /> Delete
                     </button>
                   </div>
-                </div>
+                </motion.div>
               ))}
             </div>
           </>
