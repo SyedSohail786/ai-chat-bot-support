@@ -86,7 +86,7 @@ export default function Navbar() {
           <motion.div variants={item} className="flex items-center">
             <Link href={localStorage.getItem("adminToken")? "/admin/dashboard": "/"} className="flex items-center">
               <FiMessageSquare className="h-8 w-8 text-blue-600" />
-              <span className="ml-2 text-xl font-bold">SmartSupport</span>
+                <span className="ml-2 text-xl font-bold text-center flex justify-center items-center">{localStorage.getItem("adminToken")?"Admin Panel": "SmartSupport"}</span>
             </Link>
           </motion.div>
 
