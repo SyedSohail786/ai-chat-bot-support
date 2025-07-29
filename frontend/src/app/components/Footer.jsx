@@ -66,9 +66,9 @@ export default function Footer() {
             <p className="text-gray-400 text-sm">
               &copy; {new Date().getFullYear()} SmartSupport. All rights reserved.
             </p>
-{/*             <p className="text-gray-400 text-sm"> */}
-{/*               Developed by Syed Sohail with ❤️ */}
-{/*             </p> */}
+            <p className="text-gray-400 text-sm"> 
+               Developed by Syed Sohail with ❤️ 
+           </p> 
           </div>
         </div>
       </div>
